@@ -2,8 +2,33 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--mybatis约定-->
+<!--namespace 改映射文件mapper.xml的唯一标识-->
+<!--parameterType 和 resultType 形式上就只有一个-->
+<!--如果输入参数是基本数据类型 + String  可以使用 任意占位符 #{xxxx}
+                           如果是对象 就只能是 对象的属性名 #{属性名}-->
+<!--后续通过 namespace.id-->
 <mapper namespace="mapping.personMapper">
-    <select id="selectOnePresonById" resultType="com.xiong.mybatis.entry.Person" parameterType="int">
+
+    <select id="selectOnePresonById" resultType="PersOn" parameterType="int">
                   select * from person where id = #{id}
+    </select>
+
+    <insert id="addPerson" parameterType="Person">
+        insert into person values(#{id},#{name},#{age})
+    </insert>
+
+    <update id="updatePersonByAge" parameterType="Person" >
+        update  person set name = #{name}, age = #{age} where id = #{id}
+    </update>
+
+    <delete id="deletePersonInfoById" parameterType="int">
+        delete from person where id = #{id}
+    </delete>
+
+    <!-- resultType 如果返回值类型是一个对象 无论返回一个和多个 都一样&ndash;&gt;-->
+    <select id="queryAllPersons" resultType="Person">
+          select * from person
     </select>
 </mapper>

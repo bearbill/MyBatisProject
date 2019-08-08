@@ -3,14 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+<!-- 通过environments的 default值 和 environment id 来指定 mybatis 运行时的数据库环境  可以代码中指定使用哪个数据库环境
+  new SqlSessionFactoryBuilder().build(reader，“数据库环境ID”)-->
+
+    <properties resource="db.properties"/>
+<!--    全局参数的配置-->
+<!--<settings>-->
+<!--    <setting name="cacheEnabled" value="false"/> -->
+<!--</settings>-->
+
+<!--    定义别名-->
+    <typeAliases>
+    <!--    单个别名 别名不区分大小写-->
+         <typeAlias type="com.xiong.mybatis.entry.Person" alias="Person"/>
+      <!--  批量定义别名    该包中的类 批量修改别名  不带包名的类名  -->
+        <package name="com.xiong.entry"/>
+    </typeAliases>
+
     <environments default="development">
         <environment id="development">
+            <!-- 配置事务的提交方式
+                      JDBC 传统的手动方式 （commit rollback close）
+                      MANGED 事务交给其他组件托管（Spring ）默认会关闭链接
+                      <property name="" value="/>-->
             <transactionManager type="JDBC"/>
+            <!--数据源连接池
+                POOLED  使用数据源连接池(三方的)
+                UNPOOLED  不使用数据库连接池  每次访问数据库打开 关闭数据库操作  消耗性能
+                JNDI       从Tomcat 中获取一个内置的数据库连接池-->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="driver" value="${driver}"/>
                 <property name="url" value="jdbc:mysql://localhost:3306/mybatisDb?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC"/>
-                <property name="username" value="root"/>
-                <property name="password" value="xiongwj"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
             </dataSource>
         </environment>
     </environments>
