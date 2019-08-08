@@ -21,16 +21,25 @@ public class PersonTest {
        // queryAllPersons();
        // updatePersonByAge();
       //  queryOnePersonById();
-        //addPerson();
+       // addPerson();
       //  queryAllPersons();
-       // deletePersonInfoById();
-       // queryAllPersons();
+      // deletePersonInfoById();
+       //queryAllPersons();
+        selectOnePresonByName();
 
 
     }
 
+    public static void selectOnePresonByName()
+    {
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        Person person =   sqlSession.selectOne("mapping.personMapper.selectOnePresonByName","jiajia");
+        System.out.println(person);
+    }
     public static void deletePersonInfoById()
     {
+
         SqlSession sqlSession = sqlSessionFactory.openSession();
         int  count=  sqlSession.update("mapping.personMapper.deletePersonInfoById",3);
         sqlSession.commit();
@@ -40,7 +49,7 @@ public class PersonTest {
     public static void addPerson()
     {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        Person addPerson = new Person(3,"jiajia",18);
+        Person addPerson = new Person(5,"test2",5,true);
         int  count=  sqlSession.update("mapping.personMapper.addPerson",addPerson);
         sqlSession.commit();
         sqlSession.close();
@@ -51,7 +60,7 @@ public class PersonTest {
     {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        Person updatePerson = new Person(1,"",66);
+        Person updatePerson = new Person(1,"",66,false);
          int  low=  sqlSession.update("mapping.personMapper.updatePersonByAge",updatePerson);
         sqlSession.commit();
         sqlSession.close();

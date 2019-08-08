@@ -16,7 +16,7 @@ public class ProjectAsMain {
 
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        Person persion = sqlSession.selectOne("mapping.personMapper.selectOnePresonById",2);
+        Person persion = sqlSession.selectOne("mapping.personMapper.selectOnePresonById",1);
 
         System.out.println(persion);
     }

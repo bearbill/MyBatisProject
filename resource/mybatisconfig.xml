@@ -20,6 +20,15 @@
         <package name="com.xiong.entry"/>
     </typeAliases>
 
+<!--    自定义类型转换器  java类型 转换成 数据库类型 例如 boolean -> int
+    需要实现 TypeHandler接口  他有个实现类   BaseTypeHandler
+    1.实现TypeHandler接口
+    2.继承BaseTypeHandler类-->
+  <typeHandlers>
+      <typeHandler handler="com.xiong.mybatis.TypeHandler.BooleanToIntConverter" javaType="java.lang.Boolean" jdbcType="INTEGER"/>
+  </typeHandlers>
+
+
     <environments default="development">
         <environment id="development">
             <!-- 配置事务的提交方式

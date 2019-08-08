@@ -9,14 +9,42 @@
 <!--如果输入参数是基本数据类型 + String  可以使用 任意占位符 #{xxxx}
                            如果是对象 就只能是 对象的属性名 #{属性名}-->
 <!--后续通过 namespace.id-->
+
+
 <mapper namespace="mapping.personMapper">
 
-    <select id="selectOnePresonById" resultType="PersOn" parameterType="int">
-                  select * from person where id = #{id}
+    <resultMap id="personMap" type="Person">
+            <!--   主键 id 和非主键 result-->
+        <!--    <id property="" column=""/>-->
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex" typeHandler="com.xiong.mybatis.TypeHandler.BooleanToIntConverter"/>
+    </resultMap>
+
+    <!--   查询使用了类型转换器
+      1.如果类的属性和表中的字段能合理识别 用 resultType
+      2.否则要使用 resultMap
+     -->
+    <select id="selectOnePresonById" resultMap="personMap" parameterType="int">
+                  select * from person where id =  ${value}
+    </select>
+
+
+<!--   输入参数 parameterType
+ 1.基本数据类型 + String  可以使用 任意占位符 #{xxxx}
+ 2.基本数据类型 + String   可以使用 ${value}
+ 3.对象类型  #{属性名}  ${属性名}
+  #自动给String类型添加''
+  $原样输出 用$就要在外面套个‘’ 适合动态排序  select * from person order by ${value} asc
+  4. #{} 可以防止sql注入  ${} 不行
+  5.#{} 和 ${} 都可以传递对象-->
+    <select id="selectOnePresonByName" resultMap="personMap" parameterType="String">
+               select * from person where name ='${value}'
     </select>
 
     <insert id="addPerson" parameterType="Person">
-        insert into person values(#{id},#{name},#{age})
+        insert into person values(#{id},#{name},#{age},#{sex})
     </insert>
 
     <update id="updatePersonByAge" parameterType="Person" >
@@ -31,4 +59,6 @@
     <select id="queryAllPersons" resultType="Person">
           select * from person
     </select>
+
+
 </mapper>
