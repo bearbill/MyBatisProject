@@ -1,0 +1,1 @@
+pull 流程-----先git add，然后vcs重置head为hard，然后再pull，一般就没问题了

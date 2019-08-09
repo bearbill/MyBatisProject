@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.mybatis.Mapper.StudentMapper">
+
+        <insert id="addStudnetInfo" parameterType="Student">
+            insert into student values(#{stuId},#{stuName},#{stuAge})
+         </insert>
+
+        <select id="queryAllStudnetInfo" resultType="Student">
+              select * from student
+        </select>
+
+        <update id="updateStudentInfo" parameterType="Student">
+            update student set stuAge = #{stuAge} where stuId = #{stuId}
+        </update>
+
+        <delete id="delStudentInfo"  parameterType="int">
+            delete from student where stuId = ${value}
+        </delete>
+
+
+<!--    参数为类型为 hashMap  用key 作为 占位符 #{name}  匹配成功用hashMap的 value 替换 占位符-->
+       <select id="queryStudnetInfoByParameterTypeHashMap" parameterType="HashMap" resultType="Student">
+              select * from student where stuName = #{name}
+        </select>
+
+
+<!--   返回类型为 HashMap   返回一条记录对应一个HashMap  如果返回多条数据 需要用List<HashMap>去接收 -->
+
+    <select id="queryStudnetInfoByReturnTypeHashMap" resultType="HashMap" >
+              select stuName "name",stuAge "age" from student
+        </select>
+
+</mapper>

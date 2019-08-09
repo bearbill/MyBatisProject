@@ -16,6 +16,8 @@
     <typeAliases>
     <!--    单个别名 别名不区分大小写-->
          <typeAlias type="com.xiong.mybatis.entry.Person" alias="Person"/>
+         <typeAlias type="com.xiong.mybatis.entry.Student" alias="Student"/>
+        <typeAlias type="com.xiong.mybatis.entry.Address" alias="Address"/>
       <!--  批量定义别名    该包中的类 批量修改别名  不带包名的类名  -->
         <package name="com.xiong.entry"/>
     </typeAliases>
@@ -50,5 +52,7 @@
     </environments>
     <mappers>
         <mapper resource="mapping/personMapper.xml"/>
+        <mapper resource="mapping/studentMapper.xml"/>
+        <mapper resource="mapping/addressMapper.xml"/>
     </mappers>
 </configuration>
