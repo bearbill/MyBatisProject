@@ -1,6 +1,7 @@
 package com.xiong.mybatis.Mapper;
 
 import com.xiong.mybatis.entry.Student;
+import com.xiong.mybatis.entry.StudentClass;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,5 +21,11 @@ public interface StudentMapper {
      List<Student> queryAllStudnetInfo();
      List<Student> queryStudnetInfoByParameterTypeHashMap(Map<String, Object> map);
      List<HashMap<String,Object>> queryStudnetInfoByReturnTypeHashMap();
+
+     List<Student> queryStudentInfoAndCourseInfo(int id);
+
+     List<StudentClass> queryStudentClassInfo(int id);
+
+     List<StudentClass> queryStudentClassInfoWithLazyLoad(int id);
 
 }

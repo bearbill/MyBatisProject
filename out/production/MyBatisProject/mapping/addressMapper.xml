@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiong.mybatis.Mapper.AddressMapper">
+
+    <insert id="addAdderssInfo" parameterType="Address">
+            insert into address values(#{id},#{studentAddress},#{personAddress})
+    </insert>
+
+    <resultMap id="addressInfo" type="Address">
+        <result property="id" column="id"/>
+        <result property="studentAddress" column="stuaddress"/>
+        <result property="personAddress" column="peraddress"/>
+    </resultMap>
+<!--
+resultType
+resultMap  :实体类的属性和数据表的字段 ：类型 、名字不同时候
+属性名和字段名称不一样 还可以用  resultType+HashMap 例如 ： queryAddressInfoByHashMap
+
+
+-->
+    <select id="queryAddressInfo" resultMap="addressInfo">
+              select * from address
+     </select>
+
+
+    <select id="queryAddressInfoByHashMap" resultType="Address">
+              select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+     </select>
+
+
+<!--    动态sql-->
+
+    <select id="queryAddressInfoBySqlTap" parameterType="Address" resultType="Address">
+              select * from address
+              <where>
+                  <if test="studentAddress!= null and studentAddress!=''">
+                    and stuaddress = #{studentAddress}
+                  </if>
+
+                  <if test="studentAddress!= null and studentAddress!=''">
+                      and stuaddress = #{studentAddress}
+                  </if>
+
+                  <if test="id!= 0 ">
+                      and id = #{id}
+                  </if>
+
+              </where>
+     </select>
+
+
+<!--    foreach标签 数值 对象数值 集合 对象集合 属性（例如Address 有个list<Integer> ids）-->
+
+    <!-- 根据Address里面的属性List 查数据-->
+    <select id="queryAddressInfoWithProps" parameterType="Address" resultType="Address">
+        select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+        <where>
+            <foreach collection="loveId" open="and id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+
+    <!-- 根据 简单数组查数据-->
+    <select id="queryAddressInfoWithArray" parameterType="int[]" resultType="Address">
+        select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+        <where>
+            <foreach collection="array" open="and id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 根据 集合list查数据-->
+    <select id="queryAddressInfoWithList" parameterType="list" resultType="Address">
+        select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+        <where>
+            <foreach collection="list" open="and id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 根据 对象数组查数据-->
+    <select id="queryAddressInfoWithObjectArray" parameterType="Object[]" resultType="Address">
+        select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+        <where>
+            <foreach collection="array" open="and id in (" close=")" item="student" separator=",">
+                #{student.stuId}
+            </foreach>
+        </where>
+    </select>
+
+
+    <!-- 根据 集合list查数据-->
+    <select id="queryAddressInfoWithListObject" parameterType="list" resultType="Address">
+        select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address
+        <where>
+            <foreach collection="list" open="and id in (" close=")" item="student" separator=",">
+                #{student.stuId}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>

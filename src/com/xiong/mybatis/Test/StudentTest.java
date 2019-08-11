@@ -2,11 +2,14 @@ package com.xiong.mybatis.Test;
 
 import com.xiong.mybatis.Mapper.StudentMapper;
 import com.xiong.mybatis.entry.Student;
+import com.xiong.mybatis.entry.StudentClass;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.PropertyConfigurator;
 
+import java.io.InputStream;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.List;
@@ -20,13 +23,16 @@ public class StudentTest {
         Reader reader = Resources.getResourceAsReader("mybatisconfig.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
-         addStudnetInfo();
+         //addStudnetInfo(); 测试关联查询 在这个字段新添加了个字段
         //queryAllStudent();
        // updateStudentInfo();
        // delStudentInfo();
         //queryAllStudent();
         //queryStudnetInfoByParameterTypeHashMap();
-        queryStudnetInfoByReturnTypeHashMap();
+       // queryStudnetInfoByReturnTypeHashMap();
+        //queryStudentInfoAndCourseInfo();
+       // queryStudentClassInfo();
+         queryStudentClassInfoWithLazyLoad();
 
     }
 
@@ -36,7 +42,7 @@ public class StudentTest {
 
         StudentMapper studentMapper =  sqlSession.getMapper(StudentMapper.class);
 
-        Student student = new Student(1,"xiong",33);
+        Student student = new Student(2,"xiong",33);
         studentMapper.addStudnetInfo(student);
         sqlSession.commit();
 
@@ -95,4 +101,38 @@ public class StudentTest {
         System.out.println(list);
     }
 
+    static void queryStudentInfoAndCourseInfo()
+    {
+
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+
+        StudentMapper studentMapper =  sqlSession.getMapper(StudentMapper.class);
+
+        List<Student> list = studentMapper.queryStudentInfoAndCourseInfo(1);
+        System.out.println(list);
+
+    }
+
+
+     static void     queryStudentClassInfo()
+    {
+                 SqlSession sqlSession =  sqlSessionFactory.openSession();
+              StudentMapper studentMapper =  sqlSession.getMapper(StudentMapper.class);
+
+                List<StudentClass> list = studentMapper.queryStudentClassInfo(1);
+                System.out.println(list);
+
+
+    }
+
+
+    static void    queryStudentClassInfoWithLazyLoad()
+    {
+        SqlSession sqlSession =  sqlSessionFactory.openSession();
+        StudentMapper studentMapper =  sqlSession.getMapper(StudentMapper.class);
+
+        List<StudentClass> list = studentMapper.queryStudentClassInfoWithLazyLoad(1);
+        System.out.println(list);
+
+    }
 }

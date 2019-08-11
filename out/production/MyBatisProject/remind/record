@@ -1,13 +1,5 @@
 pull 流程-----先git add，然后vcs重置head为hard，然后再pull，一般就没问题了
 
-延迟加载过程
-1.开启延迟加载配置
-   mybatisconfig.xml 配置Settings
-2.配置Mapper.xml
-   例如查询班级里面的学生数据
-    先查班级 如果有用到需要学生数据的时候在加载学生信息
-    studentMapper.xml 的例子 queryStudentClassInfoWithLazyLoad
-
 create table student(stuId int,stuName char(50),stuAge char(50));
 create table address(id int,stuaddress char(50),peraddress char(50));
 create table Course(courseId int primary key,course char(100));

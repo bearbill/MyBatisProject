@@ -6,6 +6,8 @@ public class Student {
     private String stuName;
     private int stuAge;
 
+    private StudentCourse coures;
+
     public Student() {
     }
 
@@ -39,12 +41,25 @@ public class Student {
         this.stuAge = stuAge;
     }
 
+    public StudentCourse getCoures() {
+        return coures;
+    }
+
+    public void setCoures(StudentCourse coures) {
+        this.coures = coures;
+    }
+
     @Override
     public String toString() {
+        String  courseInfo = "";
+        if(getCoures() !=null)
+        {
+            courseInfo = getCoures().toString();
+        }
         return "Student{" +
                 "stuId=" + stuId +
                 ", stuName='" + stuName + '\'' +
                 ", stuAge=" + stuAge +
-                '}';
+                '}' +"====="+courseInfo;
     }
 }
