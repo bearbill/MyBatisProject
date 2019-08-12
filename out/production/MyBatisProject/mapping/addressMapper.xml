@@ -4,7 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiong.mybatis.Mapper.AddressMapper">
 
-    <insert id="addAdderssInfo" parameterType="Address">
+<!--   开启mybatis 默认的二级缓存-->
+    <cache/>
+
+    <insert id="addAdderssInfo" parameterType="Address" >
             insert into address values(#{id},#{studentAddress},#{personAddress})
     </insert>
 
@@ -24,6 +27,10 @@ resultMap  :实体类的属性和数据表的字段 ：类型 、名字不同时
               select * from address
      </select>
 
+
+    <update id="updateAddressInfo" parameterType="int">
+       update address set stuaddress = "chongq" where id = #{id}
+    </update>
 
     <select id="queryAddressInfoByHashMap" resultType="Address">
               select id "id" , stuaddress "studentAddress" ,peraddress "personAddress" from address

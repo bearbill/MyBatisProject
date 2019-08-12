@@ -24,7 +24,7 @@ public class StudentTest {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
          //addStudnetInfo(); 测试关联查询 在这个字段新添加了个字段
-        //queryAllStudent();
+       // queryAllStudent();
        // updateStudentInfo();
        // delStudentInfo();
         //queryAllStudent();
@@ -32,8 +32,7 @@ public class StudentTest {
        // queryStudnetInfoByReturnTypeHashMap();
         //queryStudentInfoAndCourseInfo();
        // queryStudentClassInfo();
-         queryStudentClassInfoWithLazyLoad();
-
+        // queryStudentClassInfoWithLazyLoad();
     }
 
     static void addStudnetInfo()
@@ -57,6 +56,13 @@ public class StudentTest {
         Student student = new Student(1,"xiong",23);
         List<Student> list =  studentMapper.queryAllStudnetInfo();
         System.out.println(list);
+        System.out.println("cs@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        SqlSession sqlSession2 =  sqlSessionFactory.openSession();
+        StudentMapper studentMapper2 =  sqlSession2.getMapper(StudentMapper.class);
+
+        Student student2 = new Student(1,"xiong",23);
+        List<Student> list2 =  studentMapper2.queryAllStudnetInfo();
+        System.out.println(list2);
     }
 
 
@@ -133,6 +139,10 @@ public class StudentTest {
 
         List<StudentClass> list = studentMapper.queryStudentClassInfoWithLazyLoad(1);
         System.out.println(list);
+
+        System.out.println("!!!!!!!!!!!!!!!!");
+        List<StudentClass> list2 = studentMapper.queryStudentClassInfoWithLazyLoad(2);
+        System.out.println(list2);
 
     }
 }

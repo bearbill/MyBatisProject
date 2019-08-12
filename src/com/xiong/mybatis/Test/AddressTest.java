@@ -22,15 +22,15 @@ public class AddressTest {
         Reader reader = Resources.getResourceAsReader("mybatisconfig.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
-       // queryAddressInfo();
+        //queryAddressInfo();
         //addAddressInfo();
-       // queryAddressInfoByHashMap();
+        queryAddressInfoByHashMap();
        // queryAddressInfoBySqlTap();
        // queryAddressInfoWithProps();
         //queryAddressInfoWithArray();
         //queryAddressInfoWithList();
         //queryAddressInfoWithObjectArray();
-        queryAddressInfoWithListObject();
+       // queryAddressInfoWithListObject();
     }
 
 
@@ -55,6 +55,15 @@ public class AddressTest {
         List<Address> list =  addressMapper.queryAddressInfo();
         System.out.println(list);
 
+
+
+        SqlSession sqlSession2 =  sqlSessionFactory.openSession();
+
+        AddressMapper addressMapper2 =  sqlSession2.getMapper(AddressMapper.class);
+
+        List<Address> list2 =  addressMapper2.queryAddressInfo();
+        System.out.println(list2);
+
     }
 
     static void  queryAddressInfoByHashMap()
@@ -65,6 +74,22 @@ public class AddressTest {
 
         List<Address> list =  addressMapper.queryAddressInfoByHashMap();
         System.out.println(list);
+        sqlSession.clearCache();
+
+        System.out.println("一级缓存查看");
+        addressMapper.updateAddressInfo(1);
+       // sqlSession.commit();
+        List<Address> list2 =  addressMapper.queryAddressInfoByHashMap();
+        System.out.println(list2);
+
+        System.out.println("二级缓存查看");
+        //sqlSession.close();
+        SqlSession sqlSession2 =  sqlSessionFactory.openSession();
+
+        AddressMapper addressMapper2 =  sqlSession2.getMapper(AddressMapper.class);
+
+        List<Address> list3 =  addressMapper2.queryAddressInfoByHashMap();
+        System.out.println(list3);
     }
 
     static void queryAddressInfoBySqlTap()

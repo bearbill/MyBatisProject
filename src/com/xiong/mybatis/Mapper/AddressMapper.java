@@ -9,6 +9,8 @@ public interface AddressMapper {
 
         void addAdderssInfo(Address address);
 
+        void updateAddressInfo(int id);
+
         List<Address> queryAddressInfo();
 
         List<Address> queryAddressInfoByHashMap();

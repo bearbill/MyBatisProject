@@ -1,5 +1,12 @@
 pull 流程-----先git add，然后vcs重置head为hard，然后再pull，一般就没问题了
 
+
+数据库表 例如 Student -------------- student.xml映射文件-----------------java项目里面的Student类
+                                            |
+                                            |
+                                            |
+                                        student接口
+
 延迟加载过程
 1.开启延迟加载配置
    mybatisconfig.xml 配置Settings
@@ -15,3 +22,30 @@ insert into course values(1,"music");
 insert into course values(2,"English");
 alter table student add column courseId int;
 alter table student add constraint FK_ID foreign key (courseId) references course(courseId);
+
+mybatis 一级缓存 二级缓存开启步骤
+
+一级缓存 ： mybatis默认是开启一级缓存的 用一个sqlSession对象去查询相同的数据 ，会在第一次查询的时候
+向sql发送sql语句 并将结果报错在 sqlsession 中（作为缓存存在）后续在查询同样的对象时候 就直接从缓存中查询数据
+一级缓存关闭    sqlSession.clearCache(); 或者  有commit();
+
+二级缓存 ：默认没有开启 需要手动打开
+          1. 全局配置文件         <setting name="cacheEnabled" value="true"/>
+          2.在具体的mapper.xml中 开启标签 <cache/> <!--   开启mybatis 默认的二级缓存-->
+          3.触发将查询对象 存入二级缓存的时机 是  sqlSession.close();
+          4.mybatis的二级缓存 是将查询结果保存在硬盘中 所以需要序列化
+
+二级缓存禁用  select标签中  useCache="faluse"
+        清理   与一级缓存一样有commit();
+
+ 第三方缓存  必须实现 cache接口
+              整合  ehcache二级缓存
+
+
+
+Mybatis逆向工程
+
+mybatis-generator-core.jar
+
+
+
